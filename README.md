@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a Command Line Interface (CLI) coded in NodeJS to query for Bitcoin data and store it in a CSV file from some of the [BitMEX endpoints](https://testnet.bitmex.com/api/explorer/#!/Instrument/Instrument_get). It takes in a list of user inputs from the command line, queries BitMEX, and stores the query results in a Common Separated Value (CSV) file. You may refer to `walletHistory.csv` or `instrument.csv` for a sample CSV query result.
+This is a Command Line Interface (CLI) coded in NodeJS to query for Bitcoin trading data from some of the [BitMEX endpoints](https://testnet.bitmex.com/api/explorer/#!/Instrument/Instrument_get) and store it in a CSV file. It takes in a list of user inputs from the command line, queries BitMEX, and stores the query results in a Common Separated Value (CSV) file. You may refer to `walletHistory.csv` or `instrument.csv` for a sample CSV query result.
 
 ## Author
 
