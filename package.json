@@ -1,19 +1,25 @@
 {
-  "name": "crypto-wallet",
+  "name": "crypto-csv",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yang07ly/crypto-wallet.git"
+    "url": "git+https://github.com/yang07ly/crypto-csv.git"
   },
   "author": "Yang Lu",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yang07ly/crypto-wallet/issues"
+    "url": "https://github.com/yang07ly/crypto-csv/issues"
   },
-  "homepage": "https://github.com/yang07ly/crypto-wallet#readme"
+  "homepage": "https://github.com/yang07ly/crypto-csv#readme",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "readline": "^1.3.0"
+  }
 }
