@@ -1,0 +1,19 @@
+{
+  "name": "crypto-wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yang07ly/crypto-wallet.git"
+  },
+  "author": "Yang Lu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yang07ly/crypto-wallet/issues"
+  },
+  "homepage": "https://github.com/yang07ly/crypto-wallet#readme"
+}
