@@ -28,8 +28,3 @@ npm install
 npm start
 ```
 Once the command is issued, the script will kick start. Upon successful completion, a CSV file `userWallet.csv` will be saved to the project root directory.
-
-
-## Configuration Change
-
-If you want to change the default configurations such as the target output CSV file name, you may manually change the code in `src/app.js`.
