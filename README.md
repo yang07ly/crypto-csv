@@ -2,7 +2,8 @@
 
 ## Introduction
 
-This is a Command Line Interface (CLI) coded in NodeJS to query for Bitcoin trading data from some of the [BitMEX endpoints](https://testnet.bitmex.com/api/explorer/#!/Instrument/Instrument_get) and store it in a CSV file. It takes in a list of user inputs from the command line, queries BitMEX, and stores the query results in a Common Separated Value (CSV) file. You may refer to `walletHistory.csv` or `instrument.csv` for a sample CSV query result.
+This is a NodeJS script to query for BitMEX user wallet history data from [BitMEX endpoints](https://testnet.bitmex.com/api/explorer/#!/Instrument/Instrument_get) and store it in a Common Separated Value (CSV) file.
+
 
 ## Author
 
@@ -23,54 +24,12 @@ npm install
 
 
 ## Usage
-
-1. Create a `.env` file in the project folder with the following paramters:
-```
-API_KEY=[your BitMEX API key]
-API_SECRET=[your BitMEX Secret key]
-BASE_URL=[the intended BitMEX base URL e.g. https://testnet.bitmex.com]
-```
-These 3 parameters are mandatory to query BitMEX. Do not append base url with any slashes.
-
-2. In the project folder, type:
 ```
 npm start
 ```
+Once the command is issued, the script will kick start. Upon successful completion, a CSV file `userWallet.csv` will be saved to the project root directory.
 
-## Example Use Case
 
-### Query for the wallet balance
+## Configuration Change
 
-```
-Please enter data endpoint: 
-> user/walletHistory
-Please enter query parameters by line (e.g. count: 50), hit enter in the new line to stop: 
-> count: 50
-> currency: XBt
->
-Fetching data from https://testnet.bitmex.com/api/v1/user/walletHistory...
-...
-Successfully written data to walletHistory.csv.
-Program closed.
-```
-Now you can retrieve the CSV data from `walletHistory.csv`.
-
-### Query for individual instruments
-```
-Please enter data endpoint:
-> instrument
-Please enter query parameters by line (e.g. count: 50), hit enter in the new line to stop: 
-> count: 50
-> filter: {"state": "Open"}
-> 
-Fetching data from https://testnet.bitmex.com/api/v1/instrument?count=50&filter=%7B%22state%22:%20%22Open%22%7D...
-Successfully fetched data from https://testnet.bitmex.com/api/v1/instrument?count=50&filter=%7B%22state%22:%20%22Open%22%7D.
-...
-Successfully written data to instrument.csv.
-Program closed.
-```
-Now you can retrieve the CSV data from `instrument.csv`.
-
-## Program Restrictions
-1. It only work for BitMEX.com GET API.
-2. Only columns with number or string values are included in the CSV. Columns with values of other types such as a nested list or map are excluded.
+If you want to change the default configurations such as the target output CSV file name, you may manually change the code in `src/app.js`.

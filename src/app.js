@@ -1,71 +1,22 @@
 const fs = require('fs')
 const axios = require('axios')
 const crypto = require('crypto')
-const readline = require('readline')
-const secrets = require('dotenv').config()
 
-// start point of the program
-const io = () => {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  })
-  rl.question('Please enter data endpoint: ',
-    async (endpoint) => {
-      console.log('Please enter query parameters by line' +
-        ' (e.g. count: 50), hit enter in the new line to stop: ')
-      const params = []
-      for await (const line of rl) {
-        if (line.trim().length === 0) {
-          break
-        } else {
-          params.push(line.trim())
-        }
-      }
-      run(endpoint, params).then(response => {
-        console.log(response)
-        console.log('Program closed.')
-        rl.close()
-      }).catch(error => {
-        if (error.response) {
-          console.error(error.response.data)
-        } else {
-          console.error(error)
-        }
-        rl.close()
-      })
-    })
-}
+const OUTPUT_FILENAME = 'userWallet.csv'
+const BASE_URL = 'https://testnet.bitmex.com'
+const ENDPOINT = '/api/v1/user/walletHistory'
+const API_KEY = 'BwOSpThKIbo6NfxnY5jACWQS'
+const API_SECRET = 'A73b4V_Sf3i-VwuxcSP9w7yE6Kv7nN6u6Eg5WN7FC_KlWXAY'
+const QUERY_LIMIT = 35000
 
 // handles HTTP requests
-const run = (input, params) => {
-  if (!secrets || !secrets.parsed) {
-    throw Error('.env file is missing.')
-  }
-  let BASE_URL = secrets.parsed.BASE_URL
-  if (BASE_URL[BASE_URL.length - 1] === '/') {
-    BASE_URL = BASE_URL.substring(0, BASE_URL.length - 1)
-  }
-  const API_SECRET = secrets.parsed.API_SECRET
-  const API_KEY = secrets.parsed.API_KEY
-  if (!BASE_URL || !API_SECRET || !API_KEY) {
-    throw Error('Please check your .env file.')
-  }
-
-  const output = getOutputFileName(input)
-  let path = '/api/v1/' + input
-  for (let i = 0; i < params.length; i++) {
-    const param = params[i]
-    const key = param.substring(0, param.indexOf(':'))
-    const val = param.substring(param.indexOf(':') + 1)
-    path += i === 0 ? '?' : '&'
-    path += key.trim() + '=' + encodeURI(val.trim())
-  }
+const run = () => {
   const timestamp = getTimestamp(6000)
+  const querySuffix = '?count=' + QUERY_LIMIT
   const signature = getSignature(
     API_SECRET,
     'GET',
-    path,
+    ENDPOINT + querySuffix,
     timestamp,
     ''
   )
@@ -77,16 +28,24 @@ const run = (input, params) => {
       'api-signature': signature
     }
   })
-  console.log('Fetching data from ' + BASE_URL + path + '...')
+  const path = BASE_URL + ENDPOINT + querySuffix
+  console.log('Fetching data from ' + path + '...')
   return instance.get(path)
     .then(response => {
-      console.log('Successfully fetched data from ' +
-        BASE_URL + path + '.')
-      return processData(response.data, output)
+      console.log('Successfully fetched data from ' + path + '.')
+      return processData(response.data, OUTPUT_FILENAME)
+    }).then(response => {
+      console.log(response)
+    }).catch(error => {
+      if (error.response) {
+        console.error(error.response.data)
+      } else {
+        console.error(error)
+      }
     })
 }
 
-// generates api-expires 
+// generates api-expires
 const getTimestamp = num => {
   return Math.round(Date.now() / 1000) + num
 }
@@ -98,18 +57,12 @@ const getSignature = (secret, verb, path, timestamp, data) => {
     .update(query).digest('hex')
 }
 
-// generates the filename of the output CSV
-const getOutputFileName = input => {
-  const params = input.split('/')
-  return params[params.length - 1] + '.csv'
-}
-
 // translates the query result into CSV content
 const processData = (data, output) => {
   if (!Array.isArray(data)) {
     data = [data]
   }
-  console.log('Sample data', data[0])
+  console.log('Sample Data', data[0])
   const headers = []
   for (const header in data[0]) {
     if (typeof data[0][header] !== 'object') {
@@ -140,4 +93,4 @@ const writeCSV = (path, data) => {
   )
 }
 
-io()
+run()
