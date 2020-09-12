@@ -2,7 +2,7 @@ const fs = require('fs')
 const axios = require('axios')
 const crypto = require('crypto')
 
-const OUTPUT_FILENAME = 'userWallet.csv'
+const OUTPUT_FILENAME = 'walletHistory.csv'
 const BASE_URL = 'https://testnet.bitmex.com'
 const ENDPOINT = '/api/v1/user/walletHistory'
 const API_KEY = 'BwOSpThKIbo6NfxnY5jACWQS'
