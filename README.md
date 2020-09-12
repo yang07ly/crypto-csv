@@ -27,4 +27,4 @@ npm install
 ```
 npm start
 ```
-Once the command is issued, the script will kick start. Upon successful completion, a CSV file `userWallet.csv` will be saved to the project root directory.
+Once the command is issued, the script will kick start. Upon successful completion, a CSV file `walletHistory.csv` will be saved to the project root directory.
