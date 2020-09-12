@@ -59,9 +59,6 @@ const getSignature = (secret, verb, path, timestamp, data) => {
 
 // translates the query result into CSV content
 const processData = (data, output) => {
-  if (!Array.isArray(data)) {
-    data = [data]
-  }
   console.log('Sample Data', data[0])
   const headers = []
   for (const header in data[0]) {
